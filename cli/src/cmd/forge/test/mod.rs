@@ -459,7 +459,7 @@ fn list(runner: MultiContractRunner, filter: Filter, json: bool) -> eyre::Result
 
 /// Runs all the tests
 #[allow(clippy::too_many_arguments)]
-fn test(
+pub fn test(
     config: Config,
     mut runner: MultiContractRunner,
     verbosity: u8,

@@ -11,7 +11,7 @@ use ethers::{
     abi::Address,
     prelude::{
         artifacts::{Ast, CompactBytecode, CompactDeployedBytecode},
-        Artifact, Bytes, Project, ProjectCompileOutput, U256,
+        Artifact, ArtifactId, Bytes, Project, ProjectCompileOutput, U256,
     },
     solc::{artifacts::contract::CompactContractBytecode, sourcemap::SourceMap},
 };
@@ -19,7 +19,7 @@ use eyre::Context;
 use forge::{
     coverage::{
         analysis::SourceAnalyzer, anchors::find_anchors, ContractId, CoverageReport,
-        CoverageReporter, DebugReporter, ItemAnchor, LcovReporter, SummaryReporter,
+        CoverageReporter, DebugReporter, HitMap, ItemAnchor, LcovReporter, SummaryReporter,
     },
     executor::{inspector::CheatsConfig, opts::EvmOpts},
     result::SuiteResult,
@@ -276,31 +276,45 @@ impl CoverageArgs {
             thread::spawn(move || runner.test(&self.filter, Some(tx), Default::default()).unwrap());
 
         // Add hit data to the coverage report
-        for (artifact_id, hits) in rx
+        for (test, success, hit_maps) in rx
             .into_iter()
-            .flat_map(|(_, suite)| suite.test_results.into_values())
-            .filter_map(|mut result| result.coverage.take())
-            .flat_map(|hit_maps| {
-                hit_maps.0.into_values().filter_map(|map| {
-                    Some((known_contracts.find_by_code(map.bytecode.as_ref())?.0, map))
-                })
+            .flat_map(|(_, suite)| suite.test_results.into_iter())
+            .filter_map(|(test, mut result)| Some((test, result.success, result.coverage.take()?)))
+            .map(|(test, success, hit_maps)| {
+                (
+                    test,
+                    success,
+                    hit_maps
+                        .0
+                        .into_values()
+                        .filter_map(|map| {
+                            Some((known_contracts.find_by_code(map.bytecode.as_ref())?.0, map))
+                        })
+                        .collect::<HashMap<&ArtifactId, HitMap>>(),
+                )
             })
         {
-            // TODO: Note down failing tests
-            if let Some(source_id) = report.get_source_id(
-                artifact_id.version.clone(),
-                artifact_id.source.to_string_lossy().to_string(),
-            ) {
-                let source_id = *source_id;
-                // TODO: Distinguish between creation/runtime in a smart way
-                report.add_hit_map(
-                    &ContractId {
-                        version: artifact_id.version.clone(),
-                        source_id,
-                        contract_name: artifact_id.name.clone(),
-                    },
-                    &hits,
-                );
+            if !success {
+                p_println!(!self.opts.silent => "Test {} failed. Aborting.", test);
+                std::process::exit(1);
+            }
+
+            for (artifact_id, hits) in hit_maps.into_iter() {
+                if let Some(source_id) = report.get_source_id(
+                    artifact_id.version.clone(),
+                    artifact_id.source.to_string_lossy().to_string(),
+                ) {
+                    let source_id = *source_id;
+                    // TODO: Distinguish between creation/runtime in a smart way
+                    report.add_hit_map(
+                        &ContractId {
+                            version: artifact_id.version.clone(),
+                            source_id,
+                            contract_name: artifact_id.name.clone(),
+                        },
+                        &hits,
+                    );
+                }
             }
         }
 
