@@ -73,9 +73,13 @@ recordLogs()
 getRecordedLogs()(Log[])
 
 expectEmit()
+expectEmit(uint256)
 expectEmit(address)
+expectEmit(address,uint256)
 expectEmit(bool,bool,bool,bool)
+expectEmit(bool,bool,bool,bool,uint256)
 expectEmit(bool,bool,bool,bool,address)
+expectEmit(bool,bool,bool,bool,address, uint256)
 
 mockCall(address,bytes,bytes)
 mockCall(address,uint256,bytes,bytes)

@@ -11,7 +11,7 @@ pub use hevm::*;
 )]
 pub mod hevm {
     #[rustfmt::skip]
-    const __ABI: &str = "[\nstruct Log { bytes32[] topics; bytes data; }\nstruct Rpc { string name; string url; }\nstruct DirEntry { string errorMessage; string path; uint64 depth; bool isDir; bool isSymlink; }\nstruct FsMetadata { bool isDir; bool isSymlink; uint256 length; bool readOnly; uint256 modified; uint256 accessed; uint256 created; }\n\nallowCheatcodes(address)\n\nffi(string[])(bytes)\n\nbreakpoint(string)\nbreakpoint(string,bool)\n\nroll(uint256)\nwarp(uint256)\ndifficulty(uint256)\nprevrandao(bytes32)\nfee(uint256)\ncoinbase(address)\nstore(address,bytes32,bytes32)\nload(address,bytes32)(bytes32)\n\nsetEnv(string,string)\nenvBool(string)(bool)\nenvUint(string)(uint256)\nenvInt(string)(int256)\nenvAddress(string)(address)\nenvBytes32(string)(bytes32)\nenvString(string)(string)\nenvBytes(string)(bytes)\nenvBool(string,string)(bool[])\nenvUint(string,string)(uint256[])\nenvInt(string,string)(int256[])\nenvAddress(string,string)(address[])\nenvBytes32(string,string)(bytes32[])\nenvString(string,string)(string[])\nenvBytes(string,string)(bytes[])\nenvOr(string,bool)(bool)\nenvOr(string,uint256)(uint256)\nenvOr(string,int256)(int256)\nenvOr(string,address)(address)\nenvOr(string,bytes32)(bytes32)\nenvOr(string,string)(string)\nenvOr(string,bytes)(bytes)\nenvOr(string,string,bool[])(bool[])\nenvOr(string,string,uint256[])(uint256[])\nenvOr(string,string,int256[])(int256[])\nenvOr(string,string,address[])(address[])\nenvOr(string,string,bytes32[])(bytes32[])\nenvOr(string,string,string[])(string[])\nenvOr(string,string,bytes[])(bytes[])\n\naddr(uint256)(address)\nsign(uint256,bytes32)(uint8,bytes32,bytes32)\nderiveKey(string,uint32)(uint256)\nderiveKey(string,string,uint32)(uint256)\nrememberKey(uint256)(address)\n\nprank(address)\nprank(address,address)\nstartPrank(address)\nstartPrank(address,address)\nstopPrank()\n\ndeal(address,uint256)\netch(address,bytes)\nexpectRevert()\nexpectRevert(bytes)\nexpectRevert(bytes4)\nrecord()\naccesses(address)(bytes32[],bytes32[])\n\nrecordLogs()\ngetRecordedLogs()(Log[])\n\nexpectEmit()\nexpectEmit(address)\nexpectEmit(bool,bool,bool,bool)\nexpectEmit(bool,bool,bool,bool,address)\n\nmockCall(address,bytes,bytes)\nmockCall(address,uint256,bytes,bytes)\nmockCallRevert(address,bytes,bytes)\nmockCallRevert(address,uint256,bytes,bytes)\nclearMockedCalls()\n\nexpectCall(address,bytes)\nexpectCall(address,bytes,uint64)\nexpectCall(address,uint256,bytes)\nexpectCall(address,uint256,bytes,uint64)\nexpectCall(address,uint256,uint64,bytes)\nexpectCall(address,uint256,uint64,bytes,uint64)\nexpectCallMinGas(address,uint256,uint64,bytes)\nexpectCallMinGas(address,uint256,uint64,bytes,uint64)\nexpectSafeMemory(uint64,uint64)\nexpectSafeMemoryCall(uint64,uint64)\n\ngetCode(string)\ngetDeployedCode(string)\nlabel(address,string)\ngetLabel(address)(string)\nassume(bool)\nsetNonce(address,uint64)\ngetNonce(address)\nchainId(uint256)\ntxGasPrice(uint256)\n\nbroadcast()\nbroadcast(address)\nbroadcast(uint256)\nstartBroadcast()\nstartBroadcast(address)\nstartBroadcast(uint256)\nstopBroadcast()\n\nprojectRoot()(string)\nreadFile(string)(string)\nreadFileBinary(string)(bytes)\nwriteFile(string,string)\nwriteFileBinary(string,bytes)\nopenFile(string)\nreadLine(string)(string)\nwriteLine(string,string)\ncloseFile(string)\nremoveFile(string)\ncreateDir(string, bool)\nremoveDir(string, bool)\nreadDir(string)(DirEntry[])\nreadDir(string, uint64)(DirEntry[])\nreadDir(string, uint64, bool)(DirEntry[])\nreadLink(string)(string)\nfsMetadata(string)(FsMetadata)\n\ntoString(bytes)\ntoString(address)\ntoString(uint256)\ntoString(int256)\ntoString(bytes32)\ntoString(bool)\nparseBytes(string)(bytes)\nparseAddress(string)(address)\nparseUint(string)(uint256)\nparseInt(string)(int256)\nparseBytes32(string)(bytes32)\nparseBool(string)(bool)\n\nsnapshot()(uint256)\nrevertTo(uint256)(bool)\ncreateFork(string,uint256)(uint256)\ncreateFork(string,bytes32)(uint256)\ncreateFork(string)(uint256)\ncreateSelectFork(string,uint256)(uint256)\ncreateSelectFork(string,bytes32)(uint256)\ncreateSelectFork(string)(uint256)\nselectFork(uint256)\nactiveFork()(uint256)\ntransact(bytes32)\ntransact(uint256,bytes32)\nmakePersistent(address)\nmakePersistent(address,address)\nmakePersistent(address,address,address)\nmakePersistent(address[])\nrevokePersistent(address)\nrevokePersistent(address[])\nisPersistent(address)(bool)\nrollFork(uint256)\nrollFork(bytes32)\nrollFork(uint256,uint256)\nrollFork(uint256,bytes32)\nrpcUrl(string)(string)\nrpcUrls()(string[2][])\nrpcUrlStructs()(Rpc[])\n\nwriteJson(string, string)\nwriteJson(string, string, string)\nparseJson(string)(bytes)\nparseJson(string, string)(bytes)\nparseJsonUint(string, string)(uint256)\nparseJsonUintArray(string, string)(uint256[])\nparseJsonInt(string, string)(int256)\nparseJsonIntArray(string, string)(int256[])\nparseJsonString(string, string)(string)\nparseJsonStringArray(string, string)(string[])\nparseJsonAddress(string, string)(address)\nparseJsonAddressArray(string, string)(address[])\nparseJsonBool(string, string)(bool)\nparseJsonBoolArray(string, string)(bool[])\nparseJsonBytes(string, string)(bytes)\nparseJsonBytesArray(string, string)(bytes[])\nparseJsonBytes32(string, string)(bytes32)\nparseJsonBytes32Array(string, string)(bytes32[])\nserializeBool(string,string,bool)(string)\nserializeBool(string,string,bool[])(string)\nserializeUint(string,string,uint256)(string)\nserializeUint(string,string,uint256[])(string)\nserializeInt(string,string,int256)(string)\nserializeInt(string,string,int256[])(string)\nserializeAddress(string,string,address)(string)\nserializeAddress(string,string,address[])(string)\nserializeBytes32(string,string,bytes32)(string)\nserializeBytes32(string,string,bytes32[])(string)\nserializeString(string,string,string)(string)\nserializeString(string,string,string[])(string)\nserializeBytes(string,string,bytes)(string)\nserializeBytes(string,string,bytes[])(string)\n\npauseGasMetering()\nresumeGasMetering()\n\n]";
+    const __ABI: &str = "[\nstruct Log { bytes32[] topics; bytes data; }\nstruct Rpc { string name; string url; }\nstruct DirEntry { string errorMessage; string path; uint64 depth; bool isDir; bool isSymlink; }\nstruct FsMetadata { bool isDir; bool isSymlink; uint256 length; bool readOnly; uint256 modified; uint256 accessed; uint256 created; }\n\nallowCheatcodes(address)\n\nffi(string[])(bytes)\n\nbreakpoint(string)\nbreakpoint(string,bool)\n\nroll(uint256)\nwarp(uint256)\ndifficulty(uint256)\nprevrandao(bytes32)\nfee(uint256)\ncoinbase(address)\nstore(address,bytes32,bytes32)\nload(address,bytes32)(bytes32)\n\nsetEnv(string,string)\nenvBool(string)(bool)\nenvUint(string)(uint256)\nenvInt(string)(int256)\nenvAddress(string)(address)\nenvBytes32(string)(bytes32)\nenvString(string)(string)\nenvBytes(string)(bytes)\nenvBool(string,string)(bool[])\nenvUint(string,string)(uint256[])\nenvInt(string,string)(int256[])\nenvAddress(string,string)(address[])\nenvBytes32(string,string)(bytes32[])\nenvString(string,string)(string[])\nenvBytes(string,string)(bytes[])\nenvOr(string,bool)(bool)\nenvOr(string,uint256)(uint256)\nenvOr(string,int256)(int256)\nenvOr(string,address)(address)\nenvOr(string,bytes32)(bytes32)\nenvOr(string,string)(string)\nenvOr(string,bytes)(bytes)\nenvOr(string,string,bool[])(bool[])\nenvOr(string,string,uint256[])(uint256[])\nenvOr(string,string,int256[])(int256[])\nenvOr(string,string,address[])(address[])\nenvOr(string,string,bytes32[])(bytes32[])\nenvOr(string,string,string[])(string[])\nenvOr(string,string,bytes[])(bytes[])\n\naddr(uint256)(address)\nsign(uint256,bytes32)(uint8,bytes32,bytes32)\nderiveKey(string,uint32)(uint256)\nderiveKey(string,string,uint32)(uint256)\nrememberKey(uint256)(address)\n\nprank(address)\nprank(address,address)\nstartPrank(address)\nstartPrank(address,address)\nstopPrank()\n\ndeal(address,uint256)\netch(address,bytes)\nexpectRevert()\nexpectRevert(bytes)\nexpectRevert(bytes4)\nrecord()\naccesses(address)(bytes32[],bytes32[])\n\nrecordLogs()\ngetRecordedLogs()(Log[])\n\nexpectEmit()\nexpectEmit(uint256)\nexpectEmit(address)\nexpectEmit(address,uint256)\nexpectEmit(bool,bool,bool,bool)\nexpectEmit(bool,bool,bool,bool,uint256)\nexpectEmit(bool,bool,bool,bool,address)\nexpectEmit(bool,bool,bool,bool,address, uint256)\n\nmockCall(address,bytes,bytes)\nmockCall(address,uint256,bytes,bytes)\nmockCallRevert(address,bytes,bytes)\nmockCallRevert(address,uint256,bytes,bytes)\nclearMockedCalls()\n\nexpectCall(address,bytes)\nexpectCall(address,bytes,uint64)\nexpectCall(address,uint256,bytes)\nexpectCall(address,uint256,bytes,uint64)\nexpectCall(address,uint256,uint64,bytes)\nexpectCall(address,uint256,uint64,bytes,uint64)\nexpectCallMinGas(address,uint256,uint64,bytes)\nexpectCallMinGas(address,uint256,uint64,bytes,uint64)\nexpectSafeMemory(uint64,uint64)\nexpectSafeMemoryCall(uint64,uint64)\n\ngetCode(string)\ngetDeployedCode(string)\nlabel(address,string)\ngetLabel(address)(string)\nassume(bool)\nsetNonce(address,uint64)\ngetNonce(address)\nchainId(uint256)\ntxGasPrice(uint256)\n\nbroadcast()\nbroadcast(address)\nbroadcast(uint256)\nstartBroadcast()\nstartBroadcast(address)\nstartBroadcast(uint256)\nstopBroadcast()\n\nprojectRoot()(string)\nreadFile(string)(string)\nreadFileBinary(string)(bytes)\nwriteFile(string,string)\nwriteFileBinary(string,bytes)\nopenFile(string)\nreadLine(string)(string)\nwriteLine(string,string)\ncloseFile(string)\nremoveFile(string)\ncreateDir(string, bool)\nremoveDir(string, bool)\nreadDir(string)(DirEntry[])\nreadDir(string, uint64)(DirEntry[])\nreadDir(string, uint64, bool)(DirEntry[])\nreadLink(string)(string)\nfsMetadata(string)(FsMetadata)\n\ntoString(bytes)\ntoString(address)\ntoString(uint256)\ntoString(int256)\ntoString(bytes32)\ntoString(bool)\nparseBytes(string)(bytes)\nparseAddress(string)(address)\nparseUint(string)(uint256)\nparseInt(string)(int256)\nparseBytes32(string)(bytes32)\nparseBool(string)(bool)\n\nsnapshot()(uint256)\nrevertTo(uint256)(bool)\ncreateFork(string,uint256)(uint256)\ncreateFork(string,bytes32)(uint256)\ncreateFork(string)(uint256)\ncreateSelectFork(string,uint256)(uint256)\ncreateSelectFork(string,bytes32)(uint256)\ncreateSelectFork(string)(uint256)\nselectFork(uint256)\nactiveFork()(uint256)\ntransact(bytes32)\ntransact(uint256,bytes32)\nmakePersistent(address)\nmakePersistent(address,address)\nmakePersistent(address,address,address)\nmakePersistent(address[])\nrevokePersistent(address)\nrevokePersistent(address[])\nisPersistent(address)(bool)\nrollFork(uint256)\nrollFork(bytes32)\nrollFork(uint256,uint256)\nrollFork(uint256,bytes32)\nrpcUrl(string)(string)\nrpcUrls()(string[2][])\nrpcUrlStructs()(Rpc[])\n\nwriteJson(string, string)\nwriteJson(string, string, string)\nparseJson(string)(bytes)\nparseJson(string, string)(bytes)\nparseJsonUint(string, string)(uint256)\nparseJsonUintArray(string, string)(uint256[])\nparseJsonInt(string, string)(int256)\nparseJsonIntArray(string, string)(int256[])\nparseJsonString(string, string)(string)\nparseJsonStringArray(string, string)(string[])\nparseJsonAddress(string, string)(address)\nparseJsonAddressArray(string, string)(address[])\nparseJsonBool(string, string)(bool)\nparseJsonBoolArray(string, string)(bool[])\nparseJsonBytes(string, string)(bytes)\nparseJsonBytesArray(string, string)(bytes[])\nparseJsonBytes32(string, string)(bytes32)\nparseJsonBytes32Array(string, string)(bytes32[])\nserializeBool(string,string,bool)(string)\nserializeBool(string,string,bool[])(string)\nserializeUint(string,string,uint256)(string)\nserializeUint(string,string,uint256[])(string)\nserializeInt(string,string,int256)(string)\nserializeInt(string,string,int256[])(string)\nserializeAddress(string,string,address)(string)\nserializeAddress(string,string,address[])(string)\nserializeBytes32(string,string,bytes32)(string)\nserializeBytes32(string,string,bytes32[])(string)\nserializeString(string,string,string)(string)\nserializeString(string,string,string[])(string)\nserializeBytes(string,string,bytes)(string)\nserializeBytes(string,string,bytes[])(string)\n\npauseGasMetering()\nresumeGasMetering()\n\n]";
     ///The parsed human-readable ABI of the contract.
     pub static HEVM_ABI: ::ethers_contract::Lazy<::ethers_core::abi::Abi> = ::ethers_contract::Lazy::new(||
     ::ethers_core::abi::parse_abi_str(__ABI).expect("ABI is always valid"));
@@ -714,8 +714,17 @@ pub mod hevm {
                 .method_hash([68, 14, 209, 13], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `expectEmit` (0x86b9620d) function
+        ///Calls the contract's `expectEmit` (0x787777ce) function
         pub fn expect_emit_1(
+            &self,
+            p0: ::ethers_core::types::U256,
+        ) -> ::ethers_contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([120, 119, 119, 206], p0)
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `expectEmit` (0x86b9620d) function
+        pub fn expect_emit_2(
             &self,
             p0: ::ethers_core::types::Address,
         ) -> ::ethers_contract::builders::ContractCall<M, ()> {
@@ -723,8 +732,18 @@ pub mod hevm {
                 .method_hash([134, 185, 98, 13], p0)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `expectEmit` (0xc321dab1) function
+        pub fn expect_emit_3(
+            &self,
+            p0: ::ethers_core::types::Address,
+            p1: ::ethers_core::types::U256,
+        ) -> ::ethers_contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([195, 33, 218, 177], (p0, p1))
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `expectEmit` (0x491cc7c2) function
-        pub fn expect_emit_2(
+        pub fn expect_emit_4(
             &self,
             p0: bool,
             p1: bool,
@@ -735,8 +754,21 @@ pub mod hevm {
                 .method_hash([73, 28, 199, 194], (p0, p1, p2, p3))
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `expectEmit` (0x0504832e) function
+        pub fn expect_emit_5(
+            &self,
+            p0: bool,
+            p1: bool,
+            p2: bool,
+            p3: bool,
+            p4: ::ethers_core::types::U256,
+        ) -> ::ethers_contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([5, 4, 131, 46], (p0, p1, p2, p3, p4))
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `expectEmit` (0x81bad6f3) function
-        pub fn expect_emit_3(
+        pub fn expect_emit_6(
             &self,
             p0: bool,
             p1: bool,
@@ -746,6 +778,20 @@ pub mod hevm {
         ) -> ::ethers_contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([129, 186, 214, 243], (p0, p1, p2, p3, p4))
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `expectEmit` (0x941bd6e5) function
+        pub fn expect_emit_7(
+            &self,
+            p0: bool,
+            p1: bool,
+            p2: bool,
+            p3: bool,
+            p4: ::ethers_core::types::Address,
+            p5: ::ethers_core::types::U256,
+        ) -> ::ethers_contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([148, 27, 214, 229], (p0, p1, p2, p3, p4, p5))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `expectRevert` (0xf4844814) function
@@ -2847,6 +2893,19 @@ pub mod hevm {
     )]
     #[ethcall(name = "expectEmit", abi = "expectEmit()")]
     pub struct ExpectEmit0Call;
+    ///Container type for all input parameters for the `expectEmit` function with signature `expectEmit(uint256)` and selector `0x787777ce`
+    #[derive(
+        Clone,
+        ::ethers_contract::EthCall,
+        ::ethers_contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "expectEmit", abi = "expectEmit(uint256)")]
+    pub struct ExpectEmit1Call(pub ::ethers_core::types::U256);
     ///Container type for all input parameters for the `expectEmit` function with signature `expectEmit(address)` and selector `0x86b9620d`
     #[derive(
         Clone,
@@ -2859,7 +2918,23 @@ pub mod hevm {
         Hash
     )]
     #[ethcall(name = "expectEmit", abi = "expectEmit(address)")]
-    pub struct ExpectEmit1Call(pub ::ethers_core::types::Address);
+    pub struct ExpectEmit2Call(pub ::ethers_core::types::Address);
+    ///Container type for all input parameters for the `expectEmit` function with signature `expectEmit(address,uint256)` and selector `0xc321dab1`
+    #[derive(
+        Clone,
+        ::ethers_contract::EthCall,
+        ::ethers_contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "expectEmit", abi = "expectEmit(address,uint256)")]
+    pub struct ExpectEmit3Call(
+        pub ::ethers_core::types::Address,
+        pub ::ethers_core::types::U256,
+    );
     ///Container type for all input parameters for the `expectEmit` function with signature `expectEmit(bool,bool,bool,bool)` and selector `0x491cc7c2`
     #[derive(
         Clone,
@@ -2872,7 +2947,26 @@ pub mod hevm {
         Hash
     )]
     #[ethcall(name = "expectEmit", abi = "expectEmit(bool,bool,bool,bool)")]
-    pub struct ExpectEmit2Call(pub bool, pub bool, pub bool, pub bool);
+    pub struct ExpectEmit4Call(pub bool, pub bool, pub bool, pub bool);
+    ///Container type for all input parameters for the `expectEmit` function with signature `expectEmit(bool,bool,bool,bool,uint256)` and selector `0x0504832e`
+    #[derive(
+        Clone,
+        ::ethers_contract::EthCall,
+        ::ethers_contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "expectEmit", abi = "expectEmit(bool,bool,bool,bool,uint256)")]
+    pub struct ExpectEmit5Call(
+        pub bool,
+        pub bool,
+        pub bool,
+        pub bool,
+        pub ::ethers_core::types::U256,
+    );
     ///Container type for all input parameters for the `expectEmit` function with signature `expectEmit(bool,bool,bool,bool,address)` and selector `0x81bad6f3`
     #[derive(
         Clone,
@@ -2885,12 +2979,35 @@ pub mod hevm {
         Hash
     )]
     #[ethcall(name = "expectEmit", abi = "expectEmit(bool,bool,bool,bool,address)")]
-    pub struct ExpectEmit3Call(
+    pub struct ExpectEmit6Call(
         pub bool,
         pub bool,
         pub bool,
         pub bool,
         pub ::ethers_core::types::Address,
+    );
+    ///Container type for all input parameters for the `expectEmit` function with signature `expectEmit(bool,bool,bool,bool,address,uint256)` and selector `0x941bd6e5`
+    #[derive(
+        Clone,
+        ::ethers_contract::EthCall,
+        ::ethers_contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "expectEmit",
+        abi = "expectEmit(bool,bool,bool,bool,address,uint256)"
+    )]
+    pub struct ExpectEmit7Call(
+        pub bool,
+        pub bool,
+        pub bool,
+        pub bool,
+        pub ::ethers_core::types::Address,
+        pub ::ethers_core::types::U256,
     );
     ///Container type for all input parameters for the `expectRevert` function with signature `expectRevert()` and selector `0xf4844814`
     #[derive(
@@ -4646,6 +4763,10 @@ pub mod hevm {
         ExpectEmit1(ExpectEmit1Call),
         ExpectEmit2(ExpectEmit2Call),
         ExpectEmit3(ExpectEmit3Call),
+        ExpectEmit4(ExpectEmit4Call),
+        ExpectEmit5(ExpectEmit5Call),
+        ExpectEmit6(ExpectEmit6Call),
+        ExpectEmit7(ExpectEmit7Call),
         ExpectRevert0(ExpectRevert0Call),
         ExpectRevert1(ExpectRevert1Call),
         ExpectRevert2(ExpectRevert2Call),
@@ -5043,6 +5164,22 @@ pub mod hevm {
             if let Ok(decoded)
                 = <ExpectEmit3Call as ::ethers_core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::ExpectEmit3(decoded));
+            }
+            if let Ok(decoded)
+                = <ExpectEmit4Call as ::ethers_core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::ExpectEmit4(decoded));
+            }
+            if let Ok(decoded)
+                = <ExpectEmit5Call as ::ethers_core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::ExpectEmit5(decoded));
+            }
+            if let Ok(decoded)
+                = <ExpectEmit6Call as ::ethers_core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::ExpectEmit6(decoded));
+            }
+            if let Ok(decoded)
+                = <ExpectEmit7Call as ::ethers_core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::ExpectEmit7(decoded));
             }
             if let Ok(decoded)
                 = <ExpectRevert0Call as ::ethers_core::abi::AbiDecode>::decode(data) {
@@ -5696,6 +5833,18 @@ pub mod hevm {
                 Self::ExpectEmit3(element) => {
                     ::ethers_core::abi::AbiEncode::encode(element)
                 }
+                Self::ExpectEmit4(element) => {
+                    ::ethers_core::abi::AbiEncode::encode(element)
+                }
+                Self::ExpectEmit5(element) => {
+                    ::ethers_core::abi::AbiEncode::encode(element)
+                }
+                Self::ExpectEmit6(element) => {
+                    ::ethers_core::abi::AbiEncode::encode(element)
+                }
+                Self::ExpectEmit7(element) => {
+                    ::ethers_core::abi::AbiEncode::encode(element)
+                }
                 Self::ExpectRevert0(element) => {
                     ::ethers_core::abi::AbiEncode::encode(element)
                 }
@@ -6066,6 +6215,10 @@ pub mod hevm {
                 Self::ExpectEmit1(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExpectEmit2(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExpectEmit3(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ExpectEmit4(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ExpectEmit5(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ExpectEmit6(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ExpectEmit7(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExpectRevert0(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExpectRevert1(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExpectRevert2(element) => ::core::fmt::Display::fmt(element, f),
@@ -6529,6 +6682,26 @@ pub mod hevm {
     impl ::core::convert::From<ExpectEmit3Call> for HEVMCalls {
         fn from(value: ExpectEmit3Call) -> Self {
             Self::ExpectEmit3(value)
+        }
+    }
+    impl ::core::convert::From<ExpectEmit4Call> for HEVMCalls {
+        fn from(value: ExpectEmit4Call) -> Self {
+            Self::ExpectEmit4(value)
+        }
+    }
+    impl ::core::convert::From<ExpectEmit5Call> for HEVMCalls {
+        fn from(value: ExpectEmit5Call) -> Self {
+            Self::ExpectEmit5(value)
+        }
+    }
+    impl ::core::convert::From<ExpectEmit6Call> for HEVMCalls {
+        fn from(value: ExpectEmit6Call) -> Self {
+            Self::ExpectEmit6(value)
+        }
+    }
+    impl ::core::convert::From<ExpectEmit7Call> for HEVMCalls {
+        fn from(value: ExpectEmit7Call) -> Self {
+            Self::ExpectEmit7(value)
         }
     }
     impl ::core::convert::From<ExpectRevert0Call> for HEVMCalls {
