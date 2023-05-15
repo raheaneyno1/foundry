@@ -140,6 +140,11 @@ pub struct Cheatcodes {
     /// Expected emits
     pub expected_emits: VecDeque<ExpectedEmit>,
 
+    /// Expected counted emits.
+    /// Tracks the particular event we expected to be emitted, the number of times it must be emitted,
+    /// and the actual number of times it has been seen.
+    pub expected_counted_emits: Option<(ExpectedEmit, u64, u64)>,
+
     /// Map of context depths to memory offset ranges that may be written to within the call depth.
     pub allowed_mem_writes: BTreeMap<u64, Vec<Range<u64>>>,
 
@@ -787,6 +792,34 @@ where
 
         // At the end of the call,
         // we need to check if we've found all the emits.
+        // This depends on how the expected emits were declared:
+        // 1. If the expected emits were set with a count, then we need to check if all the calls specified were matched.
+        // Note that this is strict matching, not a lower bound.
+        if let Some(expected_counted_emits) = &self.expected_counted_emits {
+            // If we're at the call depth where the emits were declared from, check the emits
+            let (expected_emit, expected_count, actual_count) = expected_counted_emits;
+
+            if expected_emit.depth == data.journaled_state.depth() && !call.is_static {
+                // Not all emits were matched.
+                if expected_count != actual_count {
+                    return (
+                        InstructionResult::Revert,
+                        remaining_gas,
+                        format!(
+                            "Expected {} emits, but only found {}",
+                            expected_count, actual_count
+                        )
+                        .encode()
+                        .into(),
+                    )
+                } else {
+                    // All events were found, so we can clear the expected counted emits.
+                    std::mem::take(&mut self.expected_counted_emits);
+                }
+            }
+        }
+
+        // 2. If the expected emits were set without a count, then we need to check if all the emits in the queue were matched.
         // We know we've found all the expected emits in the right order
         // if the queue is fully matched.
         // If it's not fully matched, then either:
@@ -794,8 +827,6 @@ where
         // inspected events will be less than the size of the queue) 2. The wrong events
         // were emitted (The inspected events should match the size of the queue, but still some
         // events will not be matched)
-
-        // First, check that we're at the call depth where the emits were declared from.
         let should_check_emits = self
             .expected_emits
             .iter()
@@ -886,7 +917,18 @@ where
                 }
             }
 
-            // Check if we have any leftover expected emits
+            // Check if we have any leftover expected counted or non-counted emits
+            if self.expected_counted_emits.is_some() {
+                return (
+                    InstructionResult::Revert,
+                    remaining_gas,
+                    "Expected an emit, but no logs were emitted afterward. You might have mismatched events or not enough events were emitted."
+                        .to_string()
+                        .encode()
+                        .into(),
+                )
+            }
+
             // First, if any emits were found at the root call, then we its ok and we remove them.
             self.expected_emits.retain(|expected| !expected.found);
             // If not empty, we got mismatched emits
