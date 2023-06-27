@@ -26,6 +26,8 @@ use tracing::trace;
 use ui::{TUIExitReason, Tui, Ui};
 use yansi::Paint;
 
+const ARBITRUM_SENDER: Address = Address::from_str("0x00000000000000000000000000000000000a4b05");
+
 /// CLI arguments for `cast run`.
 #[derive(Debug, Clone, Parser)]
 pub struct RunArgs {
@@ -125,7 +127,7 @@ impl RunArgs {
                 for (index, tx) in block.transactions.into_iter().enumerate() {
                     // arbitrum L1 transaction at the start of every block that has gas price 0
                     // and gas limit 0 which causes reverts, so we skip it
-                    if tx.from == "0x00000000000000000000000000000000000a4b05".parse::<Address>()? {
+                    if tx.from == ARBITRUM_SENDER {
                         continue
                     }
                     if tx.hash().eq(&tx_hash) {
