@@ -230,7 +230,7 @@ contract WriteJsonTest is DSTest {
         string memory path = "../testdata/fixtures/Json/write_complex_test.json";
         vm.serializeUint(json3, "a", uint256(123));
         string memory semiFinal = vm.serializeString(json3, "b", "test");
-        string memory finalJson = vm.serializeString(json3, "c", semiFinal);
+        string memory finalJson = vm.serializeJson(json3, "c", semiFinal);
         console.log(finalJson);
         vm.writeJson(finalJson, path);
         string memory json = vm.readFile(path);
