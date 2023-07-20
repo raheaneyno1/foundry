@@ -90,6 +90,9 @@ interface Vm {
     // Adds a private key to the local forge wallet and returns the address
     function rememberKey(uint256) external returns (address);
 
+    // Returns the current call depth. Starts at 1, as it is called from the current test function.
+    function depth() external returns (uint256);
+
     // Performs a foreign function call via terminal, (stringInputs) => (result)
     function ffi(string[] calldata) external returns (bytes memory);
 

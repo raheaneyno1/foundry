@@ -234,6 +234,9 @@ pub fn apply<DB: Database>(
             derive_key_with_wordlist(&inner.0, &inner.1, inner.2, &inner.3)
         }
         HEVMCalls::RememberKey(inner) => remember_key(state, inner.0, data.env.cfg.chain_id.into()),
+        // Note that depth called at test function level will return 1, as the depth is only 0 when
+        // the test terminates.
+        HEVMCalls::Depth(_) => Ok(U256::from(data.journaled_state.depth()).encode().into()),
         HEVMCalls::Label(inner) => {
             state.labels.insert(inner.0, inner.1.clone());
             Ok(Default::default())
