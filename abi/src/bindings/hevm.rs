@@ -465,6 +465,24 @@ pub mod hevm {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("depth"),
+                    ::std::vec![
+                        ::ethers_core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("depth"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers_core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers_core::abi::ethabi::ParamType::Uint(256usize),
+                                    internal_type: ::core::option::Option::None,
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers_core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("deriveKey"),
                     ::std::vec![
                         ::ethers_core::abi::ethabi::Function {
@@ -4935,6 +4953,14 @@ pub mod hevm {
                 .method_hash([200, 138, 94, 109], (p0, p1))
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `depth` (0x631c56ef) function
+        pub fn depth(
+            &self,
+        ) -> ::ethers_contract::builders::ContractCall<M, ::ethers_core::types::U256> {
+            self.0
+                .method_hash([99, 28, 86, 239], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `deriveKey` (0x6229498b) function
         pub fn derive_key_0(
             &self,
@@ -6985,6 +7011,19 @@ pub mod hevm {
         pub ::ethers_core::types::Address,
         pub ::ethers_core::types::U256,
     );
+    ///Container type for all input parameters for the `depth` function with signature `depth()` and selector `0x631c56ef`
+    #[derive(
+        Clone,
+        ::ethers_contract::EthCall,
+        ::ethers_contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "depth", abi = "depth()")]
+    pub struct DepthCall;
     ///Container type for all input parameters for the `deriveKey` function with signature `deriveKey(string,uint32)` and selector `0x6229498b`
     #[derive(
         Clone,
@@ -9455,6 +9494,7 @@ pub mod hevm {
         CreateSelectFork2(CreateSelectFork2Call),
         CreateSelectFork0(CreateSelectFork0Call),
         Deal(DealCall),
+        Depth(DepthCall),
         DeriveKey0(DeriveKey0Call),
         DeriveKey1(DeriveKey1Call),
         DeriveKey2(DeriveKey2Call),
@@ -9723,6 +9763,10 @@ pub mod hevm {
             if let Ok(decoded)
                 = <DealCall as ::ethers_core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Deal(decoded));
+            }
+            if let Ok(decoded)
+                = <DepthCall as ::ethers_core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Depth(decoded));
             }
             if let Ok(decoded)
                 = <DeriveKey0Call as ::ethers_core::abi::AbiDecode>::decode(data) {
@@ -10494,6 +10538,7 @@ pub mod hevm {
                     ::ethers_core::abi::AbiEncode::encode(element)
                 }
                 Self::Deal(element) => ::ethers_core::abi::AbiEncode::encode(element),
+                Self::Depth(element) => ::ethers_core::abi::AbiEncode::encode(element),
                 Self::DeriveKey0(element) => {
                     ::ethers_core::abi::AbiEncode::encode(element)
                 }
@@ -10929,6 +10974,7 @@ pub mod hevm {
                 Self::CreateSelectFork2(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CreateSelectFork0(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Deal(element) => ::core::fmt::Display::fmt(element, f),
+                Self::Depth(element) => ::core::fmt::Display::fmt(element, f),
                 Self::DeriveKey0(element) => ::core::fmt::Display::fmt(element, f),
                 Self::DeriveKey1(element) => ::core::fmt::Display::fmt(element, f),
                 Self::DeriveKey2(element) => ::core::fmt::Display::fmt(element, f),
@@ -11223,6 +11269,11 @@ pub mod hevm {
     impl ::core::convert::From<DealCall> for HEVMCalls {
         fn from(value: DealCall) -> Self {
             Self::Deal(value)
+        }
+    }
+    impl ::core::convert::From<DepthCall> for HEVMCalls {
+        fn from(value: DepthCall) -> Self {
+            Self::Depth(value)
         }
     }
     impl ::core::convert::From<DeriveKey0Call> for HEVMCalls {
@@ -12181,6 +12232,18 @@ pub mod hevm {
         Hash
     )]
     pub struct CreateSelectFork0Return(pub ::ethers_core::types::U256);
+    ///Container type for all return fields from the `depth` function with signature `depth()` and selector `0x631c56ef`
+    #[derive(
+        Clone,
+        ::ethers_contract::EthAbiType,
+        ::ethers_contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct DepthReturn(pub ::ethers_core::types::U256);
     ///Container type for all return fields from the `deriveKey` function with signature `deriveKey(string,uint32)` and selector `0x6229498b`
     #[derive(
         Clone,
