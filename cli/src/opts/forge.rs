@@ -83,6 +83,9 @@ pub enum Subcommands {
     #[clap(visible_alias = "re")]
     Remappings(RemappingArgs),
 
+    #[clap(visible_alias = "deps")]
+    Dependencies,
+
     /// Verify smart contracts on Etherscan.
     #[clap(visible_alias = "v")]
     VerifyContract(VerifyArgs),

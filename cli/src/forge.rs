@@ -7,7 +7,7 @@ use foundry_cli::{
     },
     handler,
     opts::forge::{Opts, Subcommands},
-    utils,
+    utils::{self, Git},
 };
 
 fn main() -> eyre::Result<()> {
@@ -44,6 +44,13 @@ fn main() -> eyre::Result<()> {
             }
         }
         Subcommands::Debug(cmd) => utils::block_on(cmd.debug(Default::default())),
+        Subcommands::Dependencies => {
+            let config = utils::load_config();
+            let git = Git::new(config.__root.as_ref());
+            let deps = git.list_dependencies()?;
+            println!("{:?}", deps);
+            Ok(())
+        },
         Subcommands::VerifyContract(args) => utils::block_on(args.run()),
         Subcommands::VerifyCheck(args) => utils::block_on(args.run()),
         Subcommands::Cache(cmd) => match cmd.sub {

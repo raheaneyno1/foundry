@@ -444,6 +444,10 @@ https://github.com/foundry-rs/foundry/issues/new/choose"
         self.cmd().arg("tag").get_stdout_lossy()
     }
 
+    pub fn list_dependencies(self) -> Result<String> {
+        self.cmd().args(["submodule", "foreach", "--quiet", "'echo $path `git describe --tags`'"]).get_stdout_lossy()
+    }
+
     pub fn has_missing_dependencies<I, S>(self, paths: I) -> Result<bool>
     where
         I: IntoIterator<Item = S>,
